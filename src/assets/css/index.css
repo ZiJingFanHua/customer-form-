@@ -1,0 +1,30 @@
+.container {
+  height: calc(100vh - 40px);
+  display: flex;
+  padding: 10px 30px;
+  justify-content: space-between;
+}
+
+
+.left-panel {
+  height: 100%;
+  width: 400px;
+  background-color: rgb(156, 106, 221);
+}
+
+.left-scrollbar {
+  height: 100%;
+}
+.center-panel {
+  flex: 1;
+  background-color: greenyellow;
+}
+.center-scrollbar {
+  height: calc(100vh - 40px);
+  position: relative;
+}
+.entity-draggable {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
