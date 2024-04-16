@@ -22,7 +22,7 @@ export const testComponents = [
       span: 24,
       document: 'https://element-plus.org/zh-CN/component/input.html'
     },
-    __solt__: {
+    __slot__: {
       prepend: '',
       append: ''
     },

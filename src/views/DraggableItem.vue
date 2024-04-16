@@ -66,7 +66,6 @@ const layouts = {
           <TagRunder
             key={config.renderKey}
             conf={currentItem}
-            
             onInput={(event: any) => {config.defaultValue  = event}}
           ></TagRunder>
         </el-form-item>

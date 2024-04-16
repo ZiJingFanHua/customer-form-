@@ -12,6 +12,7 @@
               :sort="false"
               :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
               @end="templateOnEnd"
+              :clone="cloneComponent"
             >
               <template #item="{ element }">
                 <div class="item">
@@ -31,7 +32,6 @@
             class="entity-draggable"
             :list="entityComponents"
             :group="{ name: 'componentsGroup', pull: false, put: true }"
-            @clone="cloneComponent"
           >
             <template #item="{ element }">
              <DraggableItem :key="element.renderKey" :drawingList="entityComponents" :currentItem="element" :activeId="activeId" :formConf="formConf" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
@@ -89,7 +89,10 @@ export default defineComponent({
       const clone = deepClone(item)
       const config = clone.__config__
       config.span = state.formConf.span
+      console.log('clone==>',item);
+      
       createIdAndKey(clone)
+      console.log('clone2==>',item);
       clone.placeholder !==undefined &&(clone.placeholder += config.label)
       state.tempActiveData = clone
       return state.tempActiveData
@@ -105,7 +108,7 @@ export default defineComponent({
         !Array.isArray(config.children) && (config.children = []);
         delete config.label; // rowFormItem无需配置label属性
       }
-
+      console.log('item==>',item);
       return item;
     };
  
