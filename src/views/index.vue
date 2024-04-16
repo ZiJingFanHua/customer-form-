@@ -34,7 +34,7 @@
             :group="{ name: 'componentsGroup', pull: false, put: true }"
           >
             <template #item="{ element }">
-             <DraggableItem :key="element.renderKey" :drawingList="entityComponents" :currentItem="element" :activeId="activeId" :formConf="formConf" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
+             <DraggableItem :key="element.renderKey" :drawingList="entityComponents" :currentItem="element" :activeId="activeId" :formConf="formConfig" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
 
              </DraggableItem>
             </template>
@@ -45,7 +45,7 @@
         </el-form>
       </el-scrollbar>
     </div>
-    <RightPanel></RightPanel>
+    <RightPanel :activeData="activeData" :formConf="formConfig"></RightPanel>
   </div>
 </template>
 
@@ -68,9 +68,9 @@ export default defineComponent({
     const state = reactive({
       idGlobal: 0, //组件id,
       activeId:0,//当前活动组件id
-      activedata:{} as any,//当前活动组件,
+      activeData:{} as any,//当前活动组件,
       tempActiveData:{} as any,
-      formConf:{} as any,
+      formConfig:formConf,
       templateComponents: [
         { title: "组件类型1", list: testComponents },
         { title: "组件类型2", list: testComponents },
@@ -78,21 +78,25 @@ export default defineComponent({
       entityComponents: [] as any,
     });
     const templateOnEnd = () => {
-      console.log("data==>", state.entityComponents);
+      // console.log("data==>", state.entityComponents);
+      state.activeData = state.tempActiveData
+        state.activeId = state.idGlobal
+      
     };
     // 创建新的表单子组件实例 =====================================
-    const drwingItemCopy = (item, list) => {
-      //
-    };
+    // const drwingItemCopy = (item, list) => {
+    //   //
+    //     // state.activeData = state.tempActiveData
+    //     // state.activeId = state.idGlobal
+    // };
 
     const cloneComponent =(item:any) =>{
       const clone = deepClone(item)
-      const config = clone.__config__
-      config.span = state.formConf.span
-      console.log('clone==>',item);
+      console.log(clone === item);
       
+      const config = clone.__config__
+      config.span = state.formConfig.span
       createIdAndKey(clone)
-      console.log('clone2==>',item);
       clone.placeholder !==undefined &&(clone.placeholder += config.label)
       state.tempActiveData = clone
       return state.tempActiveData
@@ -108,7 +112,6 @@ export default defineComponent({
         !Array.isArray(config.children) && (config.children = []);
         delete config.label; // rowFormItem无需配置label属性
       }
-      console.log('item==>',item);
       return item;
     };
  
@@ -116,8 +119,9 @@ export default defineComponent({
 
     // 组件方法 ========================
     const activeFormItem = (currentItem:any) => {
-     state.activedata = currentItem
-     state.activeId = currentItem.__config__.formId
+     state.activeData = currentItem
+     state.activeId = currentItem.__config__?.formId  
+
     }
 
     const copyFormItem = (item:any,list:any) => {
@@ -133,6 +137,8 @@ export default defineComponent({
         let length = state.entityComponents.length 
         if(length) {
           activeFormItem(state.entityComponents[length - 1])
+        }else{
+          activeFormItem({})
         }
       })
     }
@@ -144,7 +150,6 @@ export default defineComponent({
       templateOnEnd,
       createIdAndKey,
       cloneComponent,
-      drwingItemCopy,
       activeFormItem,
       copyFormItem,
       deleteFormItem,

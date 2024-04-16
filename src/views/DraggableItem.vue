@@ -27,7 +27,7 @@ const components = {
         class="drawing-item-delete"
         title="删除"
         onClick={(event: { stopPropagation: () => void; }) => {
-          onDeleteItem(currentItem, list);
+          onDeleteItem(index, list);
           event.stopPropagation();
         }}
       >
@@ -53,7 +53,8 @@ const layouts = {
       <el-col
         span={config.span}
         class={className}
-        nativeOnClick={(event: { stopPropagation: () => void; }) => {
+        onClick={(event: { stopPropagation: () => void; }) => {
+          console.log(currentItem)
           onActiveItem(currentItem);
           event.stopPropagation();
         }}

@@ -2,8 +2,7 @@
 export function deepClone(obj) {
   const _toString = Object.prototype.toString;
 
-  console.log(obj);
-  
+
   //null undefined function non-object
   if (!obj || typeof obj !== 'object') {
     return obj
@@ -29,7 +28,6 @@ export function deepClone(obj) {
 
   const result = Array.isArray(obj) ? [] : obj.constructor ? new obj.constructor : {}
 
-  console.log(result);
   
   for (const key in obj) {
     result[key] = deepClone(obj[key])

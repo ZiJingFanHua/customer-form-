@@ -94,8 +94,6 @@ export default defineComponent({
     const confClone = deepClone(this.conf)
     const children = [];
     buildDataObject.call(this,confClone,dataObject)
-    console.log(dataObject);
-    
     return h(this.conf.__config__.tag, dataObject, children);
   },
 })
