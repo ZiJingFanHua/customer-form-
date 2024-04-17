@@ -14,7 +14,8 @@ export const testComponents = [
     __config__: {
       label: '单行文本',
       labelWidth: null,
-      tag: ElInput,
+      component:ElInput,
+      tag: 'el-input',
       tagIcon: 'input',
       defaultValue: undefined,
       require: true,
@@ -23,8 +24,8 @@ export const testComponents = [
       document: 'https://element-plus.org/zh-CN/component/input.html'
     },
     __slot__: {
-      prepend: '',
-      append: ''
+      prepend: '12',
+      append: '%'
     },
     placeholder: '请输入',
     style: { width: '100%' },

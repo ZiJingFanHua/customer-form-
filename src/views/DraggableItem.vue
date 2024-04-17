@@ -41,7 +41,7 @@ const layouts = {
   colFormItem(h: any, currentItem: any, index: any, list: any) { 
     const { onActiveItem } = this.$attrs;
     const config = currentItem.__config__;
-    
+    const children = renderChildren.apply(this,arguments)
     let className = this.activeId == config.formId
         ? "drawing-item active-form-item"
         : "drawing-item";
@@ -68,7 +68,9 @@ const layouts = {
             key={config.renderKey}
             conf={currentItem}
             onInput={(event: any) => {config.defaultValue  = event}}
-          ></TagRunder>
+          >
+          {children}
+          </TagRunder>
         </el-form-item>
         {components.itemBtns.apply(this, [h, currentItem, index, list])}
       </el-col>
@@ -81,6 +83,19 @@ const layouts = {
     //
   },
 };
+
+function renderChildren(h,currentItem,index,list){
+  const config = currentItem.__config__
+  if(!Array.isArray(config.children))
+  return null
+  return config.children.map((item,index) => {
+    const layout = layouts[item.__config__.layout]
+    if(layout)
+    return layout.call(this,h,item,index,config.children)
+    else
+    return layoutIsNotFound.call(this)
+  })
+}
 function layoutIsNotFound() {
   
   throw new Error(`没有与${this.currentItem.__config__.layout}匹配的layout`);
