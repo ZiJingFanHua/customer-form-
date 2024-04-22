@@ -54,7 +54,6 @@ const layouts = {
         span={config.span}
         class={className}
         onClick={(event: { stopPropagation: () => void; }) => {
-          console.log(currentItem)
           onActiveItem(currentItem);
           event.stopPropagation();
         }}
@@ -76,8 +75,35 @@ const layouts = {
       </el-col>
     );
   },
-  rowFormItem() {
-    //
+  rowFormItem(h: any, currentItem: any, index: any, list: any) {
+    const { onActiveItem } = this.$attrs;
+    const config = currentItem.__config__;
+    const children = renderChildren.apply(this,arguments)
+    console.log(config);
+    const className = this.activeId === config.formId
+      ? 'drawing-row-item active-from-item'
+      : 'drawing-row-item'
+    const slots = {
+       'item':(item) =>{
+        return <>
+        <div>
+          {children[item.index]}
+        </div>
+        </>
+       }
+    }
+    return (
+      <el-col span={config.span}>
+        <el-row gutter={config.gutter}  class={className} onClick={(event: { stopPropagation: () => void; }) => {
+          onActiveItem(currentItem);
+          event.stopPropagation();
+        }}>
+           <draggable  class="wrapper-draggable"  group={{ name: 'componentsGroup', pull: false, put: true }} list={config.children || []} v-slots={slots}>
+           </draggable>
+        </el-row>
+        {components.itemBtns.apply(this, [h, currentItem, index, list])}
+      </el-col>
+    )
   },
   raw() {
     //
@@ -110,17 +136,11 @@ export default defineComponent({
     drawingList:Array,
     activeId:[String,Number],
     formConf:Object,
+    index:Number
   },
   components: {
     TagRunder,
     draggable,
-  },
-  computed: {
-    index() {
-      return this.drawingList.findIndex((item: any) => {
-        item.renderKey == this.currentItem.renderKey;
-      });
-    },
   },
   render() {
     const layout = layouts[this.currentItem.__config__.layout];

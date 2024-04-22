@@ -33,8 +33,8 @@
             :list="entityComponents"
             :group="{ name: 'componentsGroup', pull: false, put: true }"
           >
-            <template #item="{ element }">
-             <DraggableItem :key="element.renderKey" :drawingList="entityComponents" :currentItem="element" :activeId="activeId" :formConf="formConfig" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
+            <template #item="{ element ,index}">
+             <DraggableItem :key="element.renderKey" :drawingList="entityComponents" :currentItem="element" :index="index" :activeId="activeId" :formConf="formConfig" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
 
              </DraggableItem>
             </template>
@@ -78,7 +78,7 @@ export default defineComponent({
       entityComponents: [] as any,
     });
     const templateOnEnd = () => {
-      // console.log("data==>", state.entityComponents);
+      console.log("data==>", state.entityComponents);
       state.activeData = state.tempActiveData
         state.activeId = state.idGlobal
       

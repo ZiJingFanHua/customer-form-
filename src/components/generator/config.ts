@@ -35,5 +35,12 @@ export const testComponents = [
     maxlength: null,
     'show-word-limit': false,
     disabled: false
+  },{
+    __config__:{
+      layout:'rowFormItem',
+      tagIcon:'row',
+      label:'行容器',
+      // layoutTree:'tr' 
+    }
   }
 ]
