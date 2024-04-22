@@ -9,13 +9,15 @@
             </div>
             <draggable
               :list="item.list"
+              class="components-draggable"
               :sort="false"
               :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
               @end="templateOnEnd"
               :clone="cloneComponent"
+              item-key="index"
             >
               <template #item="{ element }">
-                <div class="item">
+                <div class="components-item">
                   {{ element.__config__.label }}
                 </div>
               </template>
@@ -32,9 +34,10 @@
             class="entity-draggable"
             :list="entityComponents"
             :group="{ name: 'componentsGroup', pull: false, put: true }"
+            item-key="renderKey"
           >
             <template #item="{ element ,index}">
-             <DraggableItem :key="element.renderKey" :drawingList="entityComponents" :currentItem="element" :index="index" :activeId="activeId" :formConf="formConfig" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
+             <DraggableItem :drawingList="entityComponents" :currentItem="element" :index="index" :activeId="activeId" :formConf="formConfig" @activeItem="activeFormItem" @copyItem="copyFormItem" @deleteItem="deleteFormItem">
 
              </DraggableItem>
             </template>
@@ -77,11 +80,11 @@ export default defineComponent({
       ],
       entityComponents: [] as any,
     });
-    const templateOnEnd = () => {
-      console.log("data==>", state.entityComponents);
+    const templateOnEnd = (obj:any) => {
+      if(obj.to!==obj.from){
       state.activeData = state.tempActiveData
-        state.activeId = state.idGlobal
-      
+      state.activeId = state.idGlobal
+      }
     };
     // 创建新的表单子组件实例 =====================================
     // const drwingItemCopy = (item, list) => {
@@ -93,7 +96,6 @@ export default defineComponent({
     const cloneComponent =(item:any) =>{
       const clone = deepClone(item)
       console.log(clone === item);
-      
       const config = clone.__config__
       config.span = state.formConfig.span
       createIdAndKey(clone)
