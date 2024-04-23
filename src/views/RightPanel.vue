@@ -5,7 +5,7 @@
       <el-tab-pane label="表单属性" name="form"></el-tab-pane>
     </el-tabs>
     <div class="field-box">
-      <el-srollbar>
+      <el-scrollbar>
         <el-form v-if="currentTable === 'field'">
           <el-form-item v-if="props.activeData.__vModel__ !== undefined" label="字段名">
             <el-input placeholder="请输入字段名" v-model="props.activeData.__vModel__"></el-input>
@@ -25,7 +25,7 @@
             <el-input placeholder="请输入表单校验规则" v-model="props.formConf.formRules"></el-input>
           </el-form-item>
         </el-form>
-      </el-srollbar>
+      </el-scrollbar>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
  <!-- 获取component 实例 -->
 <script lang="tsx">
 import { deepClone } from "@/utils";
-import { defineComponent, h } from "vue";
+import { defineComponent, h, markRaw } from "vue";
 
 const componentChild = {}
 
@@ -132,7 +132,7 @@ export default defineComponent({
     mountSlotFiles.call(this,h,confClone,children)
     buildDataObject.call(this,confClone,dataObject)
 
-    return h(this.conf.__config__.component, dataObject,children);
+    return markRaw(h(this.conf.__config__.component, dataObject,children));
   },
 })
 </script>

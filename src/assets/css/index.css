@@ -1,19 +1,48 @@
+*{
+  padding: 0;
+  margin: 0;
+}
 .container {
-  height: calc(100vh - 40px);
+  height: calc(100vh - 20px);
   display: flex;
   padding: 10px 30px;
   justify-content: space-between;
+  background-color: #E4E7ED;
 }
 
 
 .left-panel {
   height: 100%;
-  width: 400px;
-  background-color: rgb(156, 106, 221);
+  width: 300px;
+  margin-right: 10px;
+  background-color: white;
 }
 
 .left-scrollbar {
   height: 100%;
+}
+
+.left-scrollbar .template-components-list {
+  height: 100%;
+  padding-left: 10px;
+}
+
+.left-scrollbar .template-components-list .components-title {
+  display: flex;
+  justify-content: left;
+}
+.left-scrollbar .template-components-list .components-draggable {
+  margin: 10px 0;
+   display: flex;
+   justify-content:left;
+}
+.left-scrollbar .template-components-list .components-draggable .components-item {
+   padding: 8px 10px;
+   margin: 0 5px;
+   font-size: 12px;
+   cursor: move;
+   border: 1px dashed skyblue;
+   border-radius: 3px;
 }
 .center-panel {
   flex: 1;
@@ -27,4 +56,57 @@
   position: absolute;
   width: 100%;
   height: 100%;
+}
+
+.drawing-row-item {
+  position: relative;
+  cursor: move;
+  box-sizing: border-box;
+  border: 1px dashed #ccc;
+  border-radius: 3px;
+  padding: 0 2px;
+  margin-bottom: 15px;
+}
+.drawing-item{
+  position: relative;
+  cursor: move;
+  border: 1px dashed #ccc;
+}
+.drawing-row-item .wrapper-draggable {
+  min-height: 80px;
+  width: 100%;
+  border: 1px solid red;
+}
+.drawing-item, .drawing-row-item {
+  position: relative;
+  margin: 20px 0;
+  padding: 10px 0;
+}
+
+.drawing-item-copy,.drawing-item-delete {
+  /* display: none; */
+  position: absolute;
+  top: -10px;
+  width: 22px;
+  height: 22px;
+  line-height: 22px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 12px;
+  border: 1px solid;
+  cursor: pointer;
+  z-index: 1;
+}
+.drawing-item-copy {
+  right: 56px;
+  border-color: #409EFF;
+  color: #409EFF;
+  background: #fff;
+}
+
+.drawing-item-delete {
+  right: 24px;
+  border-color: #F56C6C;
+  color: #F56C6C;
+  background: #fff;
 }

@@ -42,7 +42,7 @@ const layouts = {
     const { onActiveItem } = this.$attrs;
     const config = currentItem.__config__;
     const children = renderChildren.apply(this,arguments)
-    let className = this.activeId == config.formId
+    let className = this.activeId === config.formId
         ? "drawing-item active-form-item"
         : "drawing-item";
     let labelWidth = config.labelWidth
@@ -53,7 +53,7 @@ const layouts = {
       <el-col
         span={config.span}
         class={className}
-        onClick={(event: { stopPropagation: () => void; }) => {
+        onClick={(event:any) => {
           onActiveItem(currentItem);
           event.stopPropagation();
         }}
@@ -84,24 +84,24 @@ const layouts = {
       ? 'drawing-row-item active-from-item'
       : 'drawing-row-item'
     const slots = {
-       'item':(item) =>{
-        return <>
-        <div>
-          {children[item.index]}
-        </div>
-        </>
+       'item':({element,index}) =>{
+        return <el-row>
+          {children[index]}
+        </el-row>
+        
        }
     }
     return (
       <el-col span={config.span}>
-        <el-row gutter={config.gutter}  class={className} onClick={(event: { stopPropagation: () => void; }) => {
+        <el-row gutter={config.gutter}  class={className} onClick={(event:any) => {
           onActiveItem(currentItem);
           event.stopPropagation();
         }}>
-           <draggable  class="wrapper-draggable"  group={{ name: 'componentsGroup', pull: false, put: true }} list={config.children || []} v-slots={slots}>
+           <draggable class="wrapper-draggable"  group={{ name: 'componentsGroup'}} list={config.children} v-slots={slots} item-key="renderKey">
+            
            </draggable>
+           {components.itemBtns.apply(this, [h, currentItem, index, list])}
         </el-row>
-        {components.itemBtns.apply(this, [h, currentItem, index, list])}
       </el-col>
     )
   },

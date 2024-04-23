@@ -33,7 +33,7 @@
           <draggable
             class="entity-draggable"
             :list="entityComponents"
-            :group="{ name: 'componentsGroup', pull: false, put: true }"
+            :group="{ name: 'componentsGroup', pull: true, put: true }"
             item-key="renderKey"
           >
             <template #item="{ element ,index}">
@@ -105,7 +105,7 @@ export default defineComponent({
     }
     const createIdAndKey = (item: any) => {
       const config = item.__config__;
-      config.formId == ++state.idGlobal;
+      config.formId = ++state.idGlobal;
       config.renderKey == `${config.formId}${+new Date()}`; //通过改变renderKey实现强制更新组件
       if (config.layout === "colFormItem") {
         item.__vModel__ = `field${state.idGlobal}`;
