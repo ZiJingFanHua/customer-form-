@@ -6,6 +6,7 @@ export const formConf = {
   formRules: 'rules',
   span: 24,
   disabled: false,
+  formBtns: true//是否出现提交取消按钮
 }
 
 //组件 [左面板] 
@@ -13,6 +14,7 @@ export const testComponents = [
   {
     __config__: {
       label: '单行文本',
+      showLabel:true,
       labelWidth: null,
       component:ElInput,
       tag: 'el-input',

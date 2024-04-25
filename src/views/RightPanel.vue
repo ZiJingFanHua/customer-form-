@@ -16,7 +16,7 @@
               placeholder="请输入默认值"
             />
           </el-form-item>
-          <el-form-item label="大小">
+          <el-form-item label="大小" v-if="props.activeData.__config__">
             <el-input
               v-model="props.activeData.__config__.span"
               placeholder="请输入"
@@ -44,18 +44,18 @@ export default defineComponent({
   props: ["activeData","formConf"],
   setup(props) {
     const state = reactive({
-      currentTable: "",
+      currentTable: "field",
     });
-    watch(
-      () => props.activeData,
-       (value) => {
-        if(value.label){
-          state.currentTable = 'field'
-        }else{
-          state.currentTable =''
-        }
-      },
-    );
+    // watch(
+    //   () => props.activeData,
+    //    (value) => {
+    //     if(value.__config__){
+    //       state.currentTable = 'field'
+    //     }else{
+    //       state.currentTable =''
+    //     }
+    //   },
+    // );
     
   //   const setDefaultValue = (val:any) => {
   //     if (Array.isArray(val)) {
@@ -103,6 +103,7 @@ export default defineComponent({
 .right-panel {
   width: 300px;
   height: calc(100vh - 40px);
-  background-color: aqua;
+  padding: 0 10px;
+  background-color: #ffffff;
 }
 </style>

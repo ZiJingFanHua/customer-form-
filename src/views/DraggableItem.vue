@@ -48,9 +48,7 @@ const layouts = {
     let labelWidth = config.labelWidth
       ? `${currentItem.__config__.labelWidth}px`
       : null;
-    if (config.showLabel === false) labelWidth = "0";
-    console.log(config.span);
-    
+    if (config.showLabel === false) labelWidth = "0";   
     return (
       <el-col
         span={parseInt(config.span)}
