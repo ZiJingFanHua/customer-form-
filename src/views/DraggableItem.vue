@@ -49,9 +49,11 @@ const layouts = {
       ? `${currentItem.__config__.labelWidth}px`
       : null;
     if (config.showLabel === false) labelWidth = "0";
+    console.log(config.span);
+    
     return (
       <el-col
-        span={config.span}
+        span={parseInt(config.span)}
         class={className}
         onClick={(event:any) => {
           onActiveItem(currentItem);
@@ -85,10 +87,8 @@ const layouts = {
       : 'drawing-row-item'
     const slots = {
        'item':({element,index}) =>{
-        return <el-row>
-          {children[index]}
-        </el-row>
-        
+        // return <span>{children[index]}</span>
+        return h(children[index])
        }
     }
     return (

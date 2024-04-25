@@ -16,6 +16,12 @@
               placeholder="请输入默认值"
             />
           </el-form-item>
+          <el-form-item label="大小">
+            <el-input
+              v-model="props.activeData.__config__.span"
+              placeholder="请输入"
+            />
+          </el-form-item>
         </el-form>
         <el-form v-if="currentTable === 'form'">
           <el-form-item label="表单名">
@@ -31,16 +37,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from "vue";
+import { defineComponent, reactive, toRefs, watch } from "vue";
 
 export default defineComponent({
   name: "rightPanel",
   props: ["activeData","formConf"],
   setup(props) {
     const state = reactive({
-      currentTable: "field",
+      currentTable: "",
     });
-
+    watch(
+      () => props.activeData,
+       (value) => {
+        if(value.label){
+          state.currentTable = 'field'
+        }else{
+          state.currentTable =''
+        }
+      },
+    );
+    
   //   const setDefaultValue = (val:any) => {
   //     if (Array.isArray(val)) {
   //       return val.join(',')
