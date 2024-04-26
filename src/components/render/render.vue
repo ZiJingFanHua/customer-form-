@@ -2,7 +2,7 @@
 <script lang="tsx">
 import { deepClone } from "@/utils";
 import { defineComponent, h, markRaw } from "vue";
-
+import mapping from '@/components/generator/comMapping'
 const componentChild = {}
 
 /**
@@ -131,8 +131,8 @@ export default defineComponent({
     //組件添加插槽
     mountSlotFiles.call(this,h,confClone,children)
     buildDataObject.call(this,confClone,dataObject)
-
-    return markRaw(h(this.conf.__config__.component, dataObject,children));
+    
+    return markRaw(h(mapping[this.conf.__config__.component]?mapping[this.conf.__config__.component]:this.conf.__config__.component, dataObject,children));
   },
 })
 </script>

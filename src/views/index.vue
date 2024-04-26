@@ -60,7 +60,7 @@ import draggable from "vuedraggable";
 import RightPanel from "./RightPanel.vue";
 import DraggableItem from "./DraggableItem.vue";
 import { deepClone } from "@/utils";
-export default defineComponent({
+export default defineComponent({  
   name: "customerForm",
   components: {
     draggable,

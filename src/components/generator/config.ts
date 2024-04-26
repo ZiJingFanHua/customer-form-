@@ -16,7 +16,7 @@ export const testComponents = [
       label: '单行文本',
       showLabel:true,
       labelWidth: null,
-      component:ElInput,
+      component:'el-input',
       tag: 'el-input',
       tagIcon: 'input',
       defaultValue: undefined,

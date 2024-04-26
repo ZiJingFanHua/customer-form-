@@ -2,7 +2,7 @@
 import { defineComponent, h, PropType } from "vue";
 import draggable from "vuedraggable";
 import TagRunder from "@/components/render/render.vue";
-
+import { Plus,Delete} from '@element-plus/icons-vue'
 interface ItemType {
   [key: string]: any;
 }
@@ -21,7 +21,7 @@ const components = {
           event.stopPropagation();
         }}
       >
-        复制
+      <el-icon><Plus /></el-icon>
       </span>,
       <span
         class="drawing-item-delete"
@@ -31,7 +31,7 @@ const components = {
           event.stopPropagation();
         }}
       >
-        删除
+      <el-icon><Delete /></el-icon>
       </span>,
     ];
   },
@@ -139,6 +139,8 @@ export default defineComponent({
   components: {
     TagRunder,
     draggable,
+    Plus,
+    Delete,
   },
   render() {
     const layout = layouts[this.currentItem.__config__.layout];
