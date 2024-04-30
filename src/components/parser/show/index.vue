@@ -8,14 +8,16 @@
 import { defineComponent } from 'vue'
 import Pasrser from '../Parser.vue'
 import { ElInput } from "element-plus"
+import router from '@/router'
 export default defineComponent({
   name:'exampleIndex',
+  // props: ['formConf'],
   components:{
     Pasrser,
   },
-  setup () {
+  setup (props) {
     
-    const formConf = {
+    const formConf= {
         fields: [
           {
             __config__: {
@@ -184,7 +186,9 @@ export default defineComponent({
         unFocusedComponentBorder: false
       }
 
+    
     return {
+      // props,
       formConf
     }
   }

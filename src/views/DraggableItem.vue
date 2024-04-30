@@ -67,6 +67,7 @@ const layouts = {
             key={config.renderKey}
             conf={currentItem}
             onInput={(event: any) => {config.defaultValue  = event}}
+            onChange={(event:any) => {config.defaultValue  = event}}
           >
           {children}
           </TagRunder>

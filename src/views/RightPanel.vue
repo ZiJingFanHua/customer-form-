@@ -22,6 +22,18 @@
               placeholder="请输入"
             />
           </el-form-item>
+          <el-form-item label="是否必填" v-if="props.activeData.__config__">
+            <el-input
+              v-model="props.activeData.__config__.required"
+              placeholder="请输入"
+            />
+          </el-form-item>
+          <el-form-item label="选择列表" v-if="props.activeData.__slot__?.options">
+            <!-- <el-input
+              v-model="props.activeData.__config__.span"
+              placeholder="请输入"
+            /> -->
+          </el-form-item>
         </el-form>
         <el-form v-if="currentTable === 'form'">
           <el-form-item label="表单名">
@@ -29,6 +41,9 @@
           </el-form-item>
           <el-form-item label="校验规则">
             <el-input placeholder="请输入表单校验规则" v-model="props.formConf.formRules"></el-input>
+          </el-form-item>
+          <el-form-item label="禁用表单">
+            <el-switch v-model="props.formConf.disabled" />
           </el-form-item>
         </el-form>
       </el-scrollbar>

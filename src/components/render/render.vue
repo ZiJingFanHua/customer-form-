@@ -132,7 +132,7 @@ export default defineComponent({
     mountSlotFiles.call(this,h,confClone,children)
     buildDataObject.call(this,confClone,dataObject)
     
-    return markRaw(h(mapping[this.conf.__config__.component]?mapping[this.conf.__config__.component]:this.conf.__config__.component, dataObject,children));
+    return markRaw(h(mapping[this.conf.__config__.tag]?mapping[this.conf.__config__.tag]:this.conf.__config__.tag, dataObject,children));
   },
 })
 </script>

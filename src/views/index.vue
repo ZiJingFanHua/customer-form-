@@ -28,8 +28,27 @@
     </div>
 
     <div class="center-panel">
+      <div class="action-bar">
+        <el-button icon="el-icon-video-play" type="text" @click="run">
+          运行
+        </el-button>
+        <el-button icon="el-icon-view" type="text" >
+          查看json
+        </el-button>
+        <el-button icon="el-icon-download" type="text" >
+          导出vue文件
+        </el-button>
+        <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text">
+          复制代码
+        </el-button>
+        <el-button class="delete-btn" icon="el-icon-delete" type="text" >
+          清空
+        </el-button>
+      </div>
       <el-scrollbar class="center-scrollbar" height="calc(100%)">
-        <el-form>
+        <el-form
+            :disabled="formConfig.disabled"
+            >
           <draggable
             class="entity-draggable"
             :list="entityComponents"
@@ -49,23 +68,30 @@
       </el-scrollbar>
     </div>
     <RightPanel :activeData="activeData" :formConf="formConfig"></RightPanel>
+    <template v-if="isShow">
+      <el-dialog v-model="isShow">
+      <Show :form-conf="formConfig"></Show>
+    </el-dialog>
+    </template>
   </div>
 </template>
 
 <script lang="tsx">
 import { defineComponent, nextTick, onMounted, reactive, toRefs } from "vue";
 import { getIdGlobal } from "@/utils/db";
-import { formConf, testComponents } from "@/components/generator/config";
+import { formConf, inputComponents, layoutComponents,selectComponents} from "@/components/generator/config";
 import draggable from "vuedraggable";
 import RightPanel from "./RightPanel.vue";
 import DraggableItem from "./DraggableItem.vue";
 import { deepClone } from "@/utils";
+import Show from '@/components/parser/show/index.vue'
 export default defineComponent({  
   name: "customerForm",
   components: {
     draggable,
     RightPanel,
-    DraggableItem
+    DraggableItem,
+    Show
   },
   setup() {
     const state = reactive({
@@ -74,9 +100,11 @@ export default defineComponent({
       activeData:{} as any,//当前活动组件,
       tempActiveData:{} as any,
       formConfig:formConf,
+      isShow:false,
       templateComponents: [
-        { title: "组件类型1", list: testComponents },
-        { title: "组件类型2", list: testComponents },
+        { title: "输入类型组件", list: inputComponents },
+        {title:'选择类型组件', list:selectComponents},
+        { title: "布局类型组件", list: layoutComponents },
       ],
       entityComponents: [] as any,
     });
@@ -95,7 +123,6 @@ export default defineComponent({
 
     const cloneComponent =(item:any) =>{
       const clone = deepClone(item)
-      console.log(clone === item);
       const config = clone.__config__
       config.span = state.formConfig.span
       createIdAndKey(clone)
@@ -144,6 +171,12 @@ export default defineComponent({
         }
       })
     }
+
+    const run = ()=>{
+      state.isShow = true;
+      state.formConfig.fields = deepClone(state.entityComponents)
+      
+    }
     onMounted(() => {
       state.idGlobal = getIdGlobal();
     });
@@ -155,6 +188,7 @@ export default defineComponent({
       activeFormItem,
       copyFormItem,
       deleteFormItem,
+      run,
     };
   },
 });
