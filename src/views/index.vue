@@ -41,13 +41,14 @@
         <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text">
           复制代码
         </el-button>
-        <el-button class="delete-btn" icon="el-icon-delete" type="text" >
+        <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="clean">
           清空
         </el-button>
       </div>
       <el-scrollbar class="center-scrollbar" height="calc(100%)">
         <el-form
             :disabled="formConfig.disabled"
+            :label-position="formConfig.labelPosition"
             >
           <draggable
             class="entity-draggable"
@@ -70,7 +71,7 @@
     <RightPanel :activeData="activeData" :formConf="formConfig"></RightPanel>
     <template v-if="isShow">
       <el-dialog v-model="isShow">
-      <Show :form-conf="formConfig"></Show>
+      <Pasrser :form-conf="formConfig"></Pasrser>
     </el-dialog>
     </template>
   </div>
@@ -84,14 +85,14 @@ import draggable from "vuedraggable";
 import RightPanel from "./RightPanel.vue";
 import DraggableItem from "./DraggableItem.vue";
 import { deepClone } from "@/utils";
-import Show from '@/components/parser/show/index.vue'
+import Pasrser from '@/components/parser/Parser.vue'
 export default defineComponent({  
   name: "customerForm",
   components: {
     draggable,
     RightPanel,
     DraggableItem,
-    Show
+    Pasrser
   },
   setup() {
     const state = reactive({
@@ -177,6 +178,11 @@ export default defineComponent({
       state.formConfig.fields = deepClone(state.entityComponents)
       
     }
+
+    const clean = () =>{
+      state.formConfig = formConf
+      state.entityComponents = []
+    }
     onMounted(() => {
       state.idGlobal = getIdGlobal();
     });
@@ -189,6 +195,7 @@ export default defineComponent({
       copyFormItem,
       deleteFormItem,
       run,
+      clean,
     };
   },
 });

@@ -7,6 +7,7 @@ export const formConf = {
   formRules: 'rules',
   span: 24,
   disabled: false,
+  labelPosition:'left',
   formBtns: true//是否出现提交取消按钮
 }
 
@@ -27,8 +28,8 @@ export const inputComponents = [
       document: 'https://element-plus.org/zh-CN/component/input.html'
     },
     __slot__: {
-      prepend: '12',
-      append: '%'
+      prepend: '',
+      append: ''
     },
     placeholder: '请输入',
     style: { width: '100%' },

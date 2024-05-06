@@ -91,7 +91,7 @@ const layouts = {
        }
     }
     return (
-      <el-col span={config.span}>
+      <el-col span={parseInt(config.span)}>
         <el-row gutter={config.gutter}  class={className} onClick={(event:any) => {
           onActiveItem(currentItem);
           event.stopPropagation();

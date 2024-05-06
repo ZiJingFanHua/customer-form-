@@ -23,10 +23,7 @@
             />
           </el-form-item>
           <el-form-item label="是否必填" v-if="props.activeData.__config__">
-            <el-input
-              v-model="props.activeData.__config__.required"
-              placeholder="请输入"
-            />
+            <el-switch v-model="props.activeData.__config__.required" />
           </el-form-item>
           <el-form-item label="选择列表" v-if="props.activeData.__slot__?.options">
             <!-- <el-input
@@ -41,6 +38,13 @@
           </el-form-item>
           <el-form-item label="校验规则">
             <el-input placeholder="请输入表单校验规则" v-model="props.formConf.formRules"></el-input>
+          </el-form-item>
+          <el-form-item label="标签对齐">
+            <el-radio-group v-model="props.formConf.labelPosition" class="ml-4">
+            <el-radio value="left" size="large">左对齐</el-radio>
+            <el-radio value="right" size="large">右对齐</el-radio>
+            <el-radio value="top" size="large">顶部对齐</el-radio>
+          </el-radio-group>
           </el-form-item>
           <el-form-item label="禁用表单">
             <el-switch v-model="props.formConf.disabled" />
@@ -59,7 +63,7 @@ export default defineComponent({
   props: ["activeData","formConf"],
   setup(props) {
     const state = reactive({
-      currentTable: "field",
+      currentTable: "form",
     });
     // watch(
     //   () => props.activeData,
@@ -117,7 +121,7 @@ export default defineComponent({
 <style scoped>
 .right-panel {
   width: 300px;
-  height: calc(100vh - 40px);
+  height: calc(100vh - 20px);
   padding: 0 10px;
   background-color: #ffffff;
 }

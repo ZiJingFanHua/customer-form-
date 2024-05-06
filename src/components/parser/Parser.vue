@@ -7,7 +7,7 @@ const layouts = {
   colFormItem(h,item){
    const config = item.__config__
    const labelWidth = config.labelWidth?`${config.labelWidth}px`:null
-   return <el-col span={config.span}>
+   return <el-col span={parseInt(config.span)}>
     <el-form-item label={config.label} label-width={labelWidth} prop={item.__vModel__}>
       <TagRunder conf={item} onInput={(event: any) => {config.defaultValue  = event;this.formConfCopy.formData[item.__vModel__] =event }}></TagRunder>
     </el-form-item>
@@ -16,7 +16,7 @@ const layouts = {
   rowFormItem(h,item){
     const config = item.__config__
     const children = renderChildren.apply(this,arguments)
-    return <el-col span={config.span}>
+    return <el-col span={parseInt(config.span)}>
       <el-row gutter={config.gutter}>
         {children}
       </el-row>
