@@ -79,8 +79,8 @@ function buildDataObject(confClone,dataObject){
     if(key === '__vModel__'){
       //输入值绑定
       dataObject['model-value'] = confClone.__config__.defaultValue
-      dataObject.onInput = (val:any) => {
-        this.$emit('input', val)
+      dataObject[`on${dataObject.__config__.onUpdataValue}`] = (val:any) => {
+        this.$emit('updataValue', val)
       }
     }else if(key === 'props'){
       Object.keys(confClone[key]).forEach((k:any) => {

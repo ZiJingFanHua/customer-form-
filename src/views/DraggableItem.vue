@@ -66,8 +66,7 @@ const layouts = {
           <TagRunder
             key={config.renderKey}
             conf={currentItem}
-            onInput={(event: any) => {config.defaultValue  = event}}
-            onChange={(event:any) => {config.defaultValue  = event}}
+            onUpdataValue={(event: any) => {;config.defaultValue  = event}}
           >
           {children}
           </TagRunder>
@@ -80,7 +79,6 @@ const layouts = {
     const { onActiveItem } = this.$attrs;
     const config = currentItem.__config__;
     const children = renderChildren.apply(this,arguments)
-    console.log(config);
     const className = this.activeId === config.formId
       ? 'drawing-row-item active-from-item'
       : 'drawing-row-item'

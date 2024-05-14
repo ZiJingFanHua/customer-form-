@@ -9,7 +9,7 @@ const layouts = {
    const labelWidth = config.labelWidth?`${config.labelWidth}px`:null
    return <el-col span={parseInt(config.span)}>
     <el-form-item label={config.label} label-width={labelWidth} prop={item.__vModel__}>
-      <TagRunder conf={item} onInput={(event: any) => {config.defaultValue  = event;this.formConfCopy.formData[item.__vModel__] =event }}></TagRunder>
+      <TagRunder conf={item} onInput={(event: any) => {config.defaultValue  = event;this.formConfCopy.formData[item.__vModel__] =event }} onChange={(event:any) => {config.defaultValue  = event}}></TagRunder>
     </el-form-item>
    </el-col>
   },
@@ -70,7 +70,8 @@ export default defineComponent({
     buildRules(componentList, rules){
       componentList.forEach(element => {
         const config = element.__config__
-        if(element.__vModel__ === undefined)  return 
+        // if(element.__vModel__ === undefined)  return 
+        if(element.__vModel__ !== undefined){
         const rule = []
         if(ruleTrigger[config.tag]){
             if(config.required){
@@ -79,9 +80,11 @@ export default defineComponent({
             rule.push({ required: true, message: message, trigger: ruleTrigger[config.tag] })
             }
             rules[element.__vModel__] = rule
-          }
-        if(componentList.children)
-        this.buildRules(componentList.children,rules)
+          }       
+        }
+        if(config.children){
+        this.buildRules(config.children,rules)
+        }
             });
     },
     initFormData(componentList,formData){
@@ -121,6 +124,9 @@ export default defineComponent({
     this.formConfCopy.formRules = {}
     this.initFormData(this.formConfCopy.fields,this.formConfCopy.formData)
     this.buildRules(this.formConfCopy.fields, this.formConfCopy.formRules)
+    console.log( this.formConfCopy.formRules);
+    console.log(this.formConfCopy.formData);
+    
     return renderFrom.call(this, h)
   }
 })

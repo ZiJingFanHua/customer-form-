@@ -32,7 +32,7 @@
         <el-button icon="el-icon-video-play" type="text" @click="run">
           运行
         </el-button>
-        <el-button icon="el-icon-view" type="text" >
+        <el-button icon="el-icon-view" type="text" @click="jsonShow" >
           查看json
         </el-button>
         <el-button icon="el-icon-download" type="text" >
@@ -49,6 +49,7 @@
         <el-form
             :disabled="formConfig.disabled"
             :label-position="formConfig.labelPosition"
+            :label-width="formConfig.labelWidth"
             >
           <draggable
             class="entity-draggable"
@@ -68,12 +69,15 @@
         </el-form>
       </el-scrollbar>
     </div>
-    <RightPanel :activeData="activeData" :formConf="formConfig"></RightPanel>
+    <RightPanel :formConf="formConfig" v-model:activeData="activeData"></RightPanel>
     <template v-if="isShow">
       <el-dialog v-model="isShow">
-      <Pasrser :form-conf="formConfig"></Pasrser>
+      <Pasrser :form-conf="formData"></Pasrser>
     </el-dialog>
     </template>
+    <JsonDrwaer v-model:isShow="jsonVisible" :form-data="formData">
+
+    </JsonDrwaer>
   </div>
 </template>
 
@@ -86,13 +90,15 @@ import RightPanel from "./RightPanel.vue";
 import DraggableItem from "./DraggableItem.vue";
 import { deepClone } from "@/utils";
 import Pasrser from '@/components/parser/Parser.vue'
+import JsonDrwaer from "./JsonDrwaer.vue";
 export default defineComponent({  
   name: "customerForm",
   components: {
     draggable,
     RightPanel,
     DraggableItem,
-    Pasrser
+    Pasrser,
+    JsonDrwaer
   },
   setup() {
     const state = reactive({
@@ -101,7 +107,9 @@ export default defineComponent({
       activeData:{} as any,//当前活动组件,
       tempActiveData:{} as any,
       formConfig:formConf,
+      formData:{} as any,
       isShow:false,
+      jsonVisible:false,
       templateComponents: [
         { title: "输入类型组件", list: inputComponents },
         {title:'选择类型组件', list:selectComponents},
@@ -173,18 +181,30 @@ export default defineComponent({
       })
     }
 
+    const composeFormData = () => {
+      state.formData = {
+        ...state.formConfig,
+        fields:deepClone(state.entityComponents),
+      }
+    }
     const run = ()=>{
       state.isShow = true;
-      state.formConfig.fields = deepClone(state.entityComponents)
-      
+      // state.formConfig.fields = deepClone(state.entityComponents)
+      composeFormData()
     }
 
     const clean = () =>{
       state.formConfig = formConf
       state.entityComponents = []
     }
+
+    const jsonShow = () => {
+      state.jsonVisible = true
+      composeFormData()
+    }
     onMounted(() => {
       state.idGlobal = getIdGlobal();
+      composeFormData()
     });
     return {
       ...toRefs(state),
@@ -196,6 +216,7 @@ export default defineComponent({
       deleteFormItem,
       run,
       clean,
+      jsonShow
     };
   },
 });
